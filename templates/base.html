@@ -29,30 +29,28 @@
   </form>
 </div>
 
+<!-- Encabezado -->
 {% include 'partials/_header.html' %}
 
+<!-- Mensajes flash -->
+{% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      <p class="
+        {% if 'error' in message.tags %}message-error
+        {% elif 'success' in message.tags %}message-success
+        {% else %}message-info
+        {% endif %}">
+        {{ message }}
+      </p>
+    {% endfor %}
+  </div>
+{% endif %}
 
-    <!-- Mensajes flash -->
-    {% if messages %}
-      <div class="container">
-        {% for message in messages %}
-          <p class="
-            {% if 'error' in message.tags %}message-error
-            {% elif 'success' in message.tags %}message-success
-            {% else %}message-info
-            {% endif %}">
-            {{ message }}
-          </p>
-        {% endfor %}
-      </div>
-    {% endif %}
+<main>
+    {% block content %}{% endblock %}
+</main>
 
-    {% include 'partials/_header.html' %}
-    
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-
-    {% include 'partials/_footer.html' %}
+{% include 'partials/_footer.html' %}
 </body>
 </html>
