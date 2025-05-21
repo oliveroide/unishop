@@ -88,6 +88,15 @@ def product_detail(request, product_id):
 # Registro de usuarios
 # --------------------------
 
+from .models import Order
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def mi_cuenta_view(request):
+    orders = Order.objects.filter(user=request.user).order_by('-date_created')
+    return render(request, 'micuenta.html', {'orders': orders})
+
+
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -102,3 +111,39 @@ def register_view(request):
         form = UserCreationForm()
     
     return render(request, 'register.html', {'form': form})
+
+
+
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from .models import Order, OrderItem
+from .cart import Cart
+
+@login_required
+def checkout_view(request):
+    cart = Cart(request)
+
+    if request.method == 'POST':
+        address = request.POST.get('address')
+
+        if not address:
+            messages.error(request, "Debes ingresar una dirección de entrega.")
+            return redirect('checkout')
+
+        # Crear la orden
+        order = Order.objects.create(user=request.user, address=address)
+
+        # Crear los items
+        for item in cart:
+            OrderItem.objects.create(
+                order=order,
+                product_id=item['id'],
+                quantity=item['quantity'],
+                price=item['precio']
+            )
+
+        cart.clear()
+        messages.success(request, f"Compra realizada exitosamente. Pedido #{order.id}")
+        return redirect('home')
+
+    return render(request, 'checkout.html', {'cart': cart})
