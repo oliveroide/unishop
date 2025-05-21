@@ -6,23 +6,18 @@
 <!-- Mostrar mensajes flash -->
 {% if messages %}
   {% for message in messages %}
-    {% if message.tags|default:'' == 'error' %}
-      {% set color = 'red' %}
-    {% elif message.tags|default:'' == 'success' %}
-      {% set color = 'green' %}
-    {% else %}
-      {% set color = 'black' %}
-    {% endif %}
-    <p class="message-{{ color }}" style="font-weight: bold;">
+    <p class="
+      {% if 'error' in message.tags %}message-error
+      {% elif 'success' in message.tags %}message-success
+      {% else %}message-info
+      {% endif %}
+    ">
       {{ message }}
     </p>
-    <style>
-      .message-red { color: red; }
-      .message-green { color: green; }
-      .message-black { color: black; }
-    </style>
   {% endfor %}
 {% endif %}
+
+
 
 {% if cart|length > 0 %}
   <ul>

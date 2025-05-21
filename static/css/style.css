@@ -144,3 +144,22 @@ button:hover, input[type="submit"]:hover {
     font-size: 1rem;
     margin-bottom: 1rem;
 }
+
+/* Estilos para mensajes flash */
+.message-error {
+    color: red;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.message-success {
+    color: green;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.message-info {
+    color: black;
+    font-weight: bold;
+    margin: 1rem 0;
+}
