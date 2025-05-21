@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+
+    <!-- Barra superior con autenticación -->
+    <div style="background-color: #f0f0f0; padding: 10px; text-align: right;">
+        {% if user.is_authenticated %}
+            <span>Bienvenido, {{ user.username }}</span> |
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
+        {% else %}
+            <a href="{% url 'login' %}">Iniciar sesión</a> |
+            <a href="{% url 'register' %}">Registrarse</a>
+        {% endif %}
+    </div>
+
     {% include 'partials/_header.html' %}
     
     <main>
