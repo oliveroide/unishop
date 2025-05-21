@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmación de Compra{% endblock %}
+
+{% block content %}
+<div class="container" style="text-align: center; padding: 2rem;">
+
+    <h2 style="color: green;">
+        ✅ ¡Gracias por tu compra, {{ cliente }}!
+    </h2>
+    <p>Fecha: {{ fecha|date:"d/m/Y H:i" }}</p>
+
+    <h3>Resumen del Pedido</h3>
+    {% if orden.items.all %}
+        <table style="width: 100%; margin-top: 2rem; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #f0f0f0;">
+                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">Producto</th>
+                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">Cantidad</th>
+                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">Precio</th>
+                    <th style="padding: 10px; border-bottom: 1px solid #ccc;">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in orden.items.all %}
+                <tr>
+                    <td style="padding: 10px;">{{ item.product.nombre }}</td>
+                    <td style="padding: 10px;">{{ item.quantity }}</td>
+                    <td style="padding: 10px;">${{ item.price }}</td>
+                    <td style="padding: 10px;">${{ item.price|floatformat:2|add:"0"|floatformat:2|add:""|add:item.quantity|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 style="margin-top: 2rem;">Total Pagado: 
+            <strong>${{ total_pagado }}</strong>
+        </h3>
+    {% else %}
+        <p>No se encontraron productos en esta orden.</p>
+    {% endif %}
+
+    <a href="{% url 'product_list' %}" class="btn" style="margin-top: 2rem;">⬅ Volver al catálogo</a>
+</div>
+{% endblock %}

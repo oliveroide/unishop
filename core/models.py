@@ -1,5 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
+# -------------------------------
+# Modelo de Producto
+# -------------------------------
 class Product(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
@@ -9,13 +13,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.nombre
-    
-    
 
-    from django.db import models
-from django.contrib.auth.models import User
-from .models import Product  # asegúrate de que Product ya está definido arriba
-
+# -------------------------------
+# Modelo de Orden
+# -------------------------------
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField()
@@ -24,6 +25,9 @@ class Order(models.Model):
     def __str__(self):
         return f"Pedido #{self.id} de {self.user.username}"
 
+# -------------------------------
+# Modelo de ítems por Orden
+# -------------------------------
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -32,4 +36,3 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.nombre}"
-
