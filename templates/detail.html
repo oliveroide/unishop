@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>🛒 Carrito de Compras</h2>
+
+{% if cart %}
+  <ul>
+    {% for item in cart %}
+      <li>
+        <strong>{{ item.name }}</strong><br>
+        Precio: ${{ item.price }} × {{ item.quantity }} = <strong>${{ item.total }}</strong><br>
+        <a href="{% url 'remove_from_cart' item.id %}">❌ Eliminar</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h3>Total a pagar: ${{ cart.total }}</h3>
+{% else %}
+  <p>Tu carrito está vacío.</p>
+{% endif %}
+{% endblock %}

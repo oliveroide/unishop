@@ -3,6 +3,49 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from core.models import Product
+from core.cart import Cart
+
+def cart_detail(request):
+    cart = Cart(request)
+    return render(request, 'cart/detail.html', {'cart': cart})
+
+
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart = Cart(request)
+    cart.add(product)
+    print(f'Agregado: {product.nombre}')
+    print(cart.cart)
+    return redirect('cart_detail')
+
+
+def remove_from_cart(request, product_id):
+    cart = Cart(request)
+    cart.remove(product_id)
+    return redirect('cart_detail')
+
+def clear_cart(request):
+    cart = Cart(request)
+    cart.clear()
+    messages.info(request, "Carrito vaciado.")
+    return redirect('cart_detail')
+
+from django.views.decorators.http import require_POST
+
+@require_POST
+def update_quantity(request, product_id):
+    cart = Cart(request)
+    try:
+        quantity = int(request.POST.get('quantity'))
+    except (ValueError, TypeError):
+        quantity = 1
+    cart.update(product_id, quantity)
+    return redirect('cart_detail')
+
+
+
 
 # --------------------------
 # Login y Logout
@@ -33,7 +76,9 @@ def logout_view(request):
 # --------------------------
 
 def product_list(request):
-    return render(request, 'products/list.html')
+    productos = Product.objects.all()
+    return render(request, 'products/list.html', {'productos': productos})
+
 
 @login_required
 def product_detail(request, product_id):

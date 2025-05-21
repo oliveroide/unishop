@@ -1,13 +1,42 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<div class="product-detail">
-    <img src="{{ product.imagen.url }}" alt="{{ product.nombre }}">
-    <h1>{{ product.nombre }}</h1>
-    <p>Precio: ${{ product.precio }}</p>
-    <p><strong>Descripción:</strong> {{ product.descripcion }}</p>
-    <form method="post" action="{% url 'add_to_cart' product.id %}">
-        {% csrf_token %}
-        <button type="submit">Añadir al carrito</button>
-    </form>
-</div>
+<h2>🛒 Carrito de Compras</h2>
+
+<!-- Mostrar mensajes flash -->
+{% if messages %}
+  {% for message in messages %}
+    <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; font-weight: bold;">
+      {{ message }}
+    </p>
+  {% endfor %}
+{% endif %}
+
+{% if cart %}
+  <ul>
+    {% for item in cart %}
+      <li>
+        <strong>{{ item.nombre }}</strong><br>
+        Precio: ${{ item.precio }} × {{ item.quantity }} = <strong>${{ item.total }}</strong><br>
+        <a href="{% url 'remove_from_cart' item.id %}">❌ Eliminar</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h3>Total a pagar: ${{ cart.total }}</h3>
+
+  <!-- Botón para vaciar el carrito -->
+  <form action="{% url 'clear_cart' %}" method="post" style="margin-top: 1rem;">
+    {% csrf_token %}
+    <button type="submit" style="background-color: crimson; color: white; padding: 0.5em 1em; border: none; border-radius: 5px;">
+      Vaciar carrito
+    </button>
+  </form>
+
+  <br>
+  <a href="{% url 'product_list' %}">⬅️ Seguir comprando</a>
+{% else %}
+  <p>Tu carrito está vacío.</p>
+  <a href="{% url 'product_list' %}">Ver productos</a>
+{% endif %}
 {% endblock %}
