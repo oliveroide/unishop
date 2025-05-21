@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product
 from .cart import Cart
 
+def galeria_productos(request):
+    productos = Product.objects.all()
+    return render(request, 'galeria.html', {'productos': productos})
 def product_list(request):
     productos = Product.objects.all()
     return render(request, 'products/list.html', {'productos': productos})

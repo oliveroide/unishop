@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -34,6 +37,8 @@
     .producto img {
       width: 100%;
       height: auto;
+      max-height: 200px;
+      object-fit: contain;
       border-radius: 5px;
     }
     .descripcion {
@@ -46,30 +51,17 @@
 <body>
   <h1>Catálogo de Productos UNISON</h1>
   <div class="catalogo">
+    {% for producto in productos %}
     <div class="producto">
-      <img src="imagenes/imagen1.jpeg" alt="Termo Celcius UNISON">
-      <div class="descripcion"><strong>TERMO CELCIUS CON LOGO UNISON</strong><br>Precio: $400</div>
+      <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+      <div class="descripcion">
+        <strong>{{ producto.nombre|upper }}</strong><br>
+        Precio: ${{ producto.precio }}<br>
+        {% if producto.detalles %}{{ producto.detalles }}{% endif %}
+      </div>
     </div>
-    <div class="producto">
-      <img src="imagenes/imagen2.jpeg" alt="Porta gafete listón">
-      <div class="descripcion"><strong>PORTA GAFETE LISTÓN</strong><br>Precio: $55</div>
-    </div>
-    <div class="producto">
-      <img src="imagenes/imagen3.jpeg" alt="Cuaderno media carta">
-      <div class="descripcion"><strong>CUADERNO MEDIA CARTA</strong><br>Precio: $80<br>Cuaderno tamaño media carta profesional, 100 hojas a raya con resorte metálico</div>
-    </div>
-    <div class="producto">
-      <img src="imagenes/imagen4.jpeg" alt="Chamarra universitaria">
-      <div class="descripcion"><strong>CHAMARRA UNIVERSITARIA</strong><br>Precio: $1,250<br>Variedad de colores y tallas</div>
-    </div>
-    <div class="producto">
-      <img src="imagenes/imagen5.jpeg" alt="Paraguas cuadrado">
-      <div class="descripcion"><strong>PARAGUAS CUADRADO</strong><br>Precio: $450<br>Medidas: 98 x 98 cm<br>Colores disponibles: Azul y negro</div>
-    </div>
-    <div class="producto">
-      <img src="imagenes/imagen6.jpeg" alt="Lonchera Preston">
-      <div class="descripcion"><strong>LONCHERA PRESTON</strong><br>Precio: $235<br>Medidas: 28x20x15 cm<br>Colores: azul, verde, negro, rojo</div>
-    </div>
+    {% endfor %}
   </div>
 </body>
 </html>
+{% endblock %}

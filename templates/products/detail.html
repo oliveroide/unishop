@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="product-detail">
-    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-    <h1>{{ product.name }}</h1>
-    <p>Precio: ${{ product.price }}</p>
-    <p>{{ product.description }}</p>
+    <img src="{{ product.imagen.url }}" alt="{{ product.nombre }}">
+    <h1>{{ product.nombre }}</h1>
+    <p>Precio: ${{ product.precio }}</p>
+    <p><strong>Descripción:</strong> {{ product.descripcion }}</p>
     <form method="post" action="{% url 'add_to_cart' product.id %}">
         {% csrf_token %}
         <button type="submit">Añadir al carrito</button>
