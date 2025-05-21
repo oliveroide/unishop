@@ -8,12 +8,17 @@ class Cart:
             cart = self.session['cart'] = {}
         self.cart = cart
 
-    def add(self, product_id, quantity=1):
-        product_id = str(product_id)
+    def add(self, product, quantity=1):
+        product_id = str(product.id)
         if product_id in self.cart:
             self.cart[product_id]['quantity'] += quantity
         else:
-            self.cart[product_id] = {'quantity': quantity}
+            self.cart[product_id] = {
+                'quantity': quantity,
+                'name': product.nombre,
+                'price': str(product.precio),
+                'image': product.imagen.url if product.imagen else ''
+            }
         self.save()
 
     def remove(self, product_id):
@@ -29,5 +34,9 @@ class Cart:
     def save(self):
         self.session.modified = True
 
-    def items(self):
-        return self.cart.items()
+    def __iter__(self):
+        for item in self.cart.values():
+            yield item
+            
+    def get_total_price(self):
+        return sum(float(item['price']) * item['quantity'] for item in self.cart.values())
