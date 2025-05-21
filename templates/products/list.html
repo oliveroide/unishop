@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 
+{% block title %}Catálogo de Productos{% endblock %}
+
 {% block content %}
-<h2>Catálogo de Productos</h2>
-<div class="product-grid">
-    {% for product in products %}
-    <div class="product">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" width="150">
-        <h3>{{ product.name }}</h3>
-        <p>Precio: ${{ product.price }}</p>
-        <form method="post" action="{% url 'add_to_cart' product.id %}">
-            {% csrf_token %}
-            <button type="submit">Añadir al carrito</button>
-        </form>
+    <h2>Catálogo de Productos</h2>
+    <div class="productos">
+        {% for producto in productos %}
+            <div class="producto">
+                <h3>{{ producto.nombre }}</h3>
+                <p>{{ producto.descripcion }}</p>
+                <p>Precio: ${{ producto.precio }}</p>
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="200">
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No hay productos disponibles.</p>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 {% endblock %}
