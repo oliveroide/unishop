@@ -6,9 +6,21 @@
 <!-- Mostrar mensajes flash -->
 {% if messages %}
   {% for message in messages %}
-    <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; font-weight: bold;">
+    {% if message.tags|default:'' == 'error' %}
+      {% set color = 'red' %}
+    {% elif message.tags|default:'' == 'success' %}
+      {% set color = 'green' %}
+    {% else %}
+      {% set color = 'black' %}
+    {% endif %}
+    <p class="message-{{ color }}" style="font-weight: bold;">
       {{ message }}
     </p>
+    <style>
+      .message-red { color: red; }
+      .message-green { color: green; }
+      .message-black { color: black; }
+    </style>
   {% endfor %}
 {% endif %}
 

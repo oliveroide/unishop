@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+  .success-message {
+    color: green;
+    font-weight: bold;
+  }
+</style>
 <h2>🛒 Carrito de Compras</h2>
 
 <!-- Mostrar mensajes flash -->
 {% if messages %}
   {% for message in messages %}
-    <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; font-weight: bold;">
+    <p class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
       {{ message }}
     </p>
   {% endfor %}
