@@ -1,0 +1,28 @@
+<!-- templates/cart/detail.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+</head>
+<body>
+<h1>Carrito de Compras</h1>
+
+{% if cart.items %}
+<ul>
+    {% for id, item in cart.items %}
+    <li>
+        Producto ID: {{ id }} — Cantidad: {{ item.quantity }}
+        <a href="{% url 'remove_from_cart' id %}">Eliminar</a>
+    </li>
+    {% endfor %}
+</ul>
+<br>
+<a href="{% url 'product_list' %}">Seguir comprando</a>
+{% else %}
+<p>Tu carrito está vacío.</p>
+<a href="{% url 'product_list' %}">Ver productos</a>
+{% endif %}
+</body>
+</html>
