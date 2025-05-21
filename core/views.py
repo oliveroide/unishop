@@ -74,11 +74,20 @@ def logout_view(request):
 # --------------------------
 # Vistas públicas y privadas
 # --------------------------
+from .models import Product
+from django.db.models import Q
 
 def product_list(request):
-    productos = Product.objects.all()
-    return render(request, 'products/list.html', {'productos': productos})
-
+    query = request.GET.get('q')
+    if query:
+        productos = Product.objects.filter(
+            Q(nombre__icontains=query) |
+            Q(descripcion__icontains=query)
+        )
+    else:
+        productos = Product.objects.all()
+    
+    return render(request, 'products/list.html', {'productos': productos, 'query': query})
 
 @login_required
 def product_detail(request, product_id):

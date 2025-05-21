@@ -9,17 +9,28 @@
 </head>
 <body>
 
-    <!-- Barra superior con autenticación -->
-    <div style="background-color: #f0f0f0; padding: 10px; text-align: right;">
-        {% if user.is_authenticated %}
-            <span>Bienvenido, {{ user.username }}</span> |
-            <a href="{% url 'micuenta' %}">Mis pedidos</a> |
-            <a href="{% url 'logout' %}">Cerrar sesión</a>
-        {% else %}
-            <a href="{% url 'login' %}">Iniciar sesión</a> |
-            <a href="{% url 'register' %}">Registrarse</a>
-        {% endif %}
-    </div>
+<!-- Barra superior con autenticación -->
+<div style="background-color: #f0f0f0; padding: 10px; text-align: right;">
+    {% if user.is_authenticated %}
+        <span>Bienvenido, {{ user.username }}</span> |
+        <a href="{% url 'micuenta' %}">Mis pedidos</a> |
+        <a href="{% url 'logout' %}">Cerrar sesión</a>
+    {% else %}
+        <a href="{% url 'login' %}">Iniciar sesión</a> |
+        <a href="{% url 'register' %}">Registrarse</a>
+    {% endif %}
+</div>
+
+<!-- Barra de búsqueda -->
+<div style="background-color: #ffffff; padding: 10px; text-align: center;">
+  <form action="{% url 'product_list' %}" method="get">
+    <input type="text" name="q" placeholder="Buscar productos..." value="{{ request.GET.q }}" style="padding: 8px; width: 200px;">
+    <button type="submit">🔍</button>
+  </form>
+</div>
+
+{% include 'partials/_header.html' %}
+
 
     <!-- Mensajes flash -->
     {% if messages %}
@@ -29,8 +40,7 @@
             {% if 'error' in message.tags %}message-error
             {% elif 'success' in message.tags %}message-success
             {% else %}message-info
-            {% endif %}
-          ">
+            {% endif %}">
             {{ message }}
           </p>
         {% endfor %}

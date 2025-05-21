@@ -44,6 +44,11 @@
 
   <h3>Total a pagar: ${{ cart.total }}</h3>
 
+  <a href="{% url 'checkout' %}" class="btn btn-success" style="margin-top: 10px;">
+  Finalizar compra
+</a>
+
+
   <!-- Botón para vaciar el carrito -->
   <form action="{% url 'clear_cart' %}" method="post" style="margin-top: 1rem;">
     {% csrf_token %}
