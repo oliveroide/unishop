@@ -6,9 +6,36 @@
   <h2>Checkout de Compras</h2>
 
   <div class="section">
+    <h3>Información del Cliente</h3>
+    <label for="nombre">Nombre completo:</label>
+    <input type="text" id="nombre" name="nombre" required pattern="[a-zA-Z\s]+" title="Solo letras y espacios permitidos.">
+
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+
+  <div class="section">
     <h3>Dirección de Envío</h3>
-    <label for="address">Dirección completa:</label>
-    <input type="text" id="address" name="address" required>
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" name="direccion" required>
+
+    <label for="ciudad">Ciudad:</label>
+    <input type="text" id="ciudad" name="ciudad" required pattern="[a-zA-Z\s]+" title="Solo letras y espacios permitidos.">
+
+    <label for="codigo_postal">Código Postal:</label>
+    <input type="text" id="codigo_postal" name="codigo_postal" required pattern="\d{4,10}" title="Solo números entre 4 y 10 dígitos.">
+  </div>
+
+  <div class="section">
+    <h3>Método de Pago</h3>
+    <label for="tarjeta">Número de tarjeta:</label>
+    <input type="text" id="tarjeta" name="tarjeta" required pattern="\d{16}" maxlength="16" title="Debe contener 16 dígitos numéricos.">
+
+    <label for="expiracion">Fecha de expiración (MM/AA):</label>
+    <input type="text" id="expiracion" name="expiracion" required pattern="(0[1-9]|1[0-2])\/\d{2}" placeholder="MM/AA" title="Formato correcto: MM/AA">
+
+    <label for="cvv">CVV:</label>
+    <input type="text" id="cvv" name="cvv" required pattern="\d{3}" maxlength="3" title="Debe contener 3 dígitos numéricos.">
   </div>
 
   <div class="section">

@@ -16,7 +16,7 @@
 <div class="product-gallery">
     {% for producto in productos %}
         <div class="product-card">
-            <h3><a href="{% url 'product_detail' producto.id %}">{{ producto.nombre }}</a></h3>
+            <h3>{{ producto.nombre }}</h3>
             <p>{{ producto.descripcion }}</p>
             <p class="price">${{ producto.precio }}</p>
             {% if producto.imagen %}
