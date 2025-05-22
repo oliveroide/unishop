@@ -91,15 +91,20 @@ button:hover, input[type="submit"]:hover {
 }
 
 .product-card img {
-    width: 100%;
-    max-width: 100%;
-    flex: 1 1 320px;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    background: #f0f0f0;
+  width: 100%;
+  max-width: 100%;
+  height: auto;         /* Cambia esto */
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: #fff;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
 }
+
+
 
 .product-card h3 {
     margin: 0.5rem 0 0.2rem 0;
